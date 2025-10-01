@@ -277,6 +277,16 @@ body {
   text-shadow: 0 0 20px rgba(244, 67, 54, 0.5);
 }
 
+/* Stop popup specific styles */
+.popup-overlay.stop .popup-content {
+  background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+}
+
+.popup-overlay.stop .popup-icon {
+  color: #FF9800;
+  text-shadow: 0 0 20px rgba(255, 152, 0, 0.5);
+}
+
 /* Popup Button Styles */
 .popup-btn {
   padding: 15px 30px;

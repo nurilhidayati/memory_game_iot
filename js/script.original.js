@@ -227,8 +227,38 @@ const resetGame = () => {
   // Restart timer
   gameTimer = setInterval(updateTimer, 1000);
   
+  // Enable stop button
+  const stopBtn = document.getElementById('stop-btn');
+  stopBtn.disabled = false;
+  stopBtn.textContent = '⏹️ Stop';
+  
   // Hide popup
   hidePopup();
+};
+
+// Stop game function
+const stopGame = () => {
+  // Clear timer
+  clearInterval(gameTimer);
+  
+  // Reset all variables
+  firstGuess = '';
+  secondGuess = '';
+  count = 0;
+  previousTarget = null;
+  gameWon = false;
+  totalMatches = 0;
+  
+  // Reset timer display
+  document.getElementById('timer').textContent = timeLeft;
+  
+  // Disable stop button
+  const stopBtn = document.getElementById('stop-btn');
+  stopBtn.disabled = true;
+  stopBtn.textContent = '⏹️ Stopped';
+  
+  // Show stop popup
+  showPopup('stop', '⏹️', 'Game Stopped', 'You stopped the game. Click Play Again to restart!');
 };
 
 // Add event listeners
@@ -236,6 +266,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Restart button
   const restartBtn = document.getElementById('restart-btn');
   restartBtn.addEventListener('click', resetGame);
+  
+  // Stop button
+  const stopBtn = document.getElementById('stop-btn');
+  stopBtn.addEventListener('click', stopGame);
   
   // Popup button
   const playAgainBtn = document.getElementById('play-again-btn');

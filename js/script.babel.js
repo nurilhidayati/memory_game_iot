@@ -229,8 +229,38 @@ var resetGame = function resetGame() {
   // Restart timer
   gameTimer = setInterval(updateTimer, 1000);
   
+  // Enable stop button
+  var stopBtn = document.getElementById('stop-btn');
+  stopBtn.disabled = false;
+  stopBtn.textContent = '⏹️ Stop';
+  
   // Hide popup
   hidePopup();
+};
+
+// Stop game function
+var stopGame = function stopGame() {
+  // Clear timer
+  clearInterval(gameTimer);
+  
+  // Reset all variables
+  firstGuess = '';
+  secondGuess = '';
+  count = 0;
+  previousTarget = null;
+  gameWon = false;
+  totalMatches = 0;
+  
+  // Reset timer display
+  document.getElementById('timer').textContent = timeLeft;
+  
+  // Disable stop button
+  var stopBtn = document.getElementById('stop-btn');
+  stopBtn.disabled = true;
+  stopBtn.textContent = '⏹️ Stopped';
+  
+  // Show stop popup
+  showPopup('stop', '⏹️', 'Game Stopped', 'You stopped the game. Click Play Again to restart!');
 };
 
 // Add event listeners
@@ -238,6 +268,10 @@ document.addEventListener('DOMContentLoaded', function () {
   // Restart button
   var restartBtn = document.getElementById('restart-btn');
   restartBtn.addEventListener('click', resetGame);
+  
+  // Stop button
+  var stopBtn = document.getElementById('stop-btn');
+  stopBtn.addEventListener('click', stopGame);
   
   // Popup button
   var playAgainBtn = document.getElementById('play-again-btn');
