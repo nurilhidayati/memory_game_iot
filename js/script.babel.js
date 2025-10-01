@@ -205,8 +205,41 @@ var resetGame = function resetGame() {
   hidePopup();
 };
 
-// Add event listener for popup button
+// Game state management
+var gameStarted = false;
+
+// Show home screen
+var showHomeScreen = function showHomeScreen() {
+  document.getElementById('home-screen').style.display = 'flex';
+  document.getElementById('game').style.display = 'none';
+  gameStarted = false;
+};
+
+// Start game
+var startGame = function startGame() {
+  document.getElementById('home-screen').style.display = 'none';
+  document.getElementById('game').style.display = 'block';
+  gameStarted = true;
+  resetGame();
+};
+
+// Add event listeners
 document.addEventListener('DOMContentLoaded', function () {
-  var popupButton = document.getElementById('popup-button');
-  popupButton.addEventListener('click', resetGame);
+  // Home screen button
+  var startGameBtn = document.getElementById('start-game-btn');
+  startGameBtn.addEventListener('click', startGame);
+  
+  // Restart button
+  var restartBtn = document.getElementById('restart-btn');
+  restartBtn.addEventListener('click', resetGame);
+  
+  // Popup buttons
+  var homeBtn = document.getElementById('home-btn');
+  var playAgainBtn = document.getElementById('play-again-btn');
+  
+  homeBtn.addEventListener('click', showHomeScreen);
+  playAgainBtn.addEventListener('click', resetGame);
+  
+  // Show home screen initially
+  showHomeScreen();
 });
