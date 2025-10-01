@@ -20,15 +20,45 @@ var cardsArray = [{
   'img': 'img/kartacam2.png'
 }];
 
-var gameGrid = cardsArray.concat(cardsArray).sort(function () {
-  return 0.5 - Math.random();
-});
+// Enhanced shuffling algorithm for harder difficulty
+var shuffleArray = function shuffleArray(array) {
+  var shuffled = [].concat(array);
+  // Multiple shuffle passes for better randomization
+  for (var pass = 0; pass < 3; pass++) {
+    for (var i = shuffled.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var _ref = [shuffled[j], shuffled[i]];
+      shuffled[i] = _ref[0];
+      shuffled[j] = _ref[1];
+    }
+  }
+  return shuffled;
+};
+
+// Create more challenging grid with additional randomization
+var createChallengingGrid = function createChallengingGrid() {
+  var duplicated = cardsArray.concat(cardsArray);
+  var shuffled = shuffleArray(duplicated);
+  
+  // Additional randomization by swapping random positions
+  for (var i = 0; i < 5; i++) {
+    var pos1 = Math.floor(Math.random() * shuffled.length);
+    var pos2 = Math.floor(Math.random() * shuffled.length);
+    var _ref2 = [shuffled[pos2], shuffled[pos1]];
+    shuffled[pos1] = _ref2[0];
+    shuffled[pos2] = _ref2[1];
+  }
+  
+  return shuffled;
+};
+
+var gameGrid = createChallengingGrid();
 
 var firstGuess = '';
 var secondGuess = '';
 var count = 0;
 var previousTarget = null;
-var delay = 1200;
+var delay = 800; // Faster card flip back for harder difficulty
 var timeLeft = 30;
 var gameTimer;
 var gameWon = false;
@@ -173,10 +203,8 @@ var resetGame = function resetGame() {
   var grid = document.querySelector('.grid');
   grid.innerHTML = '';
   
-  // Recreate game grid
-  var newGameGrid = cardsArray.concat(cardsArray).sort(function () {
-    return 0.5 - Math.random();
-  });
+  // Recreate game grid with enhanced shuffling
+  var newGameGrid = createChallengingGrid();
   
   newGameGrid.forEach(function (item) {
     var name = item.name,

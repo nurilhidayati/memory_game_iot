@@ -19,15 +19,41 @@ const cardsArray = [{
 }];
 
 
-const gameGrid = cardsArray
-  .concat(cardsArray)
-  .sort(() => 0.5 - Math.random());
+// Enhanced shuffling algorithm for harder difficulty
+const shuffleArray = (array) => {
+  const shuffled = [...array];
+  // Multiple shuffle passes for better randomization
+  for (let pass = 0; pass < 3; pass++) {
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+  }
+  return shuffled;
+};
+
+// Create more challenging grid with additional randomization
+const createChallengingGrid = () => {
+  const duplicated = cardsArray.concat(cardsArray);
+  const shuffled = shuffleArray(duplicated);
+  
+  // Additional randomization by swapping random positions
+  for (let i = 0; i < 5; i++) {
+    const pos1 = Math.floor(Math.random() * shuffled.length);
+    const pos2 = Math.floor(Math.random() * shuffled.length);
+    [shuffled[pos1], shuffled[pos2]] = [shuffled[pos2], shuffled[pos1]];
+  }
+  
+  return shuffled;
+};
+
+const gameGrid = createChallengingGrid();
 
 let firstGuess = '';
 let secondGuess = '';
 let count = 0;
 let previousTarget = null;
-let delay = 1200;
+let delay = 800; // Faster card flip back for harder difficulty
 let timeLeft = 30;
 let gameTimer;
 let gameWon = false;
@@ -176,10 +202,8 @@ const resetGame = () => {
   const grid = document.querySelector('.grid');
   grid.innerHTML = '';
   
-  // Recreate game grid
-  const newGameGrid = cardsArray
-    .concat(cardsArray)
-    .sort(() => 0.5 - Math.random());
+  // Recreate game grid with enhanced shuffling
+  const newGameGrid = createChallengingGrid();
   
   newGameGrid.forEach(item => {
     const { name, img } = item;
