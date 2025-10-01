@@ -55,6 +55,43 @@ body {
   transform: translateY(0);
 }
 
+.stop-btn {
+  background: linear-gradient(45deg, #FF9800, #F57C00);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stop-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 152, 0, 0.6);
+  background: linear-gradient(45deg, #F57C00, #FF9800);
+}
+
+.stop-btn:active {
+  transform: translateY(0);
+}
+
+.stop-btn:disabled {
+  background: linear-gradient(45deg, #9E9E9E, #757575);
+  box-shadow: 0 2px 8px rgba(158, 158, 158, 0.3);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.stop-btn:disabled:hover {
+  transform: none;
+  box-shadow: 0 2px 8px rgba(158, 158, 158, 0.3);
+}
+
 .timer-container {
   font-size: 1.5em;
   font-weight: bold;
