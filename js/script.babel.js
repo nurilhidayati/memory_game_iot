@@ -124,7 +124,12 @@ grid.addEventListener('click', function (event) {
 
   var clicked = event.target;
 
-  if (clicked.nodeName === 'SECTION' || clicked === previousTarget || clicked.parentNode.classList.contains('selected') || clicked.parentNode.classList.contains('match')) {
+  // Check if game is stopped or won
+  if (gameWon) {
+    return;
+  }
+
+  if (clicked.nodeName === 'SECTION' || clicked === previousTarget || clicked.parentNode.classList.contains('selected') || clicked.parentNode.classList.contains('match') || clicked.parentNode.classList.contains('disabled')) {
     return;
   }
 
@@ -234,30 +239,49 @@ var resetGame = function resetGame() {
   stopBtn.disabled = false;
   stopBtn.textContent = '⏹️ Stop';
   
+  // Re-enable all cards
+  var cards = document.querySelectorAll('.card');
+  cards.forEach(function (card) {
+    card.classList.remove('disabled');
+    card.style.pointerEvents = 'auto';
+    card.style.opacity = '1';
+  });
+  
   // Hide popup
   hidePopup();
 };
 
 // Stop game function
 var stopGame = function stopGame() {
-  // Clear timer
-  clearInterval(gameTimer);
+  // Clear timer completely
+  if (gameTimer) {
+    clearInterval(gameTimer);
+    gameTimer = null;
+  }
   
-  // Reset all variables
+  // Reset all game variables
   firstGuess = '';
   secondGuess = '';
   count = 0;
   previousTarget = null;
-  gameWon = false;
+  gameWon = true; // Set to true to prevent further card interactions
   totalMatches = 0;
   
-  // Reset timer display
+  // Reset timer display to show current time
   document.getElementById('timer').textContent = timeLeft;
   
   // Disable stop button
   var stopBtn = document.getElementById('stop-btn');
   stopBtn.disabled = true;
   stopBtn.textContent = '⏹️ Stopped';
+  
+  // Disable all cards by adding a disabled class
+  var cards = document.querySelectorAll('.card');
+  cards.forEach(function (card) {
+    card.classList.add('disabled');
+    card.style.pointerEvents = 'none';
+    card.style.opacity = '0.6';
+  });
   
   // Show stop popup
   showPopup('stop', '⏹️', 'Game Stopped', 'You stopped the game. Click Play Again to restart!');

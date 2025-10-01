@@ -154,6 +154,18 @@ body {
   background: #6589F9 !important;
 }
 
+/* Disabled card styles */
+.card.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.card.disabled .front,
+.card.disabled .back {
+  filter: grayscale(50%);
+}
+
 /* Popup Modal Styles */
 .popup-overlay {
   position: fixed;
