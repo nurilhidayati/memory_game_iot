@@ -70,7 +70,7 @@ const match = () => {
     gameWon = true;
     clearInterval(gameTimer);
     setTimeout(() => {
-      alert('🎉 You Win! 🎉\nCongratulations! You matched all cards in time!');
+      showPopup('win', '🎉', 'You Win!', 'Congratulations! You matched all cards in time!');
     }, delay);
   }
 };
@@ -130,9 +130,85 @@ const updateTimer = () => {
   
   if (timeLeft <= 0 && !gameWon) {
     clearInterval(gameTimer);
-    alert('⏰ You Lose! ⏰\nTime\'s up! Try again to match all cards faster!');
+    showPopup('lose', '⏰', 'You Lose!', 'Time\'s up! Try again to match all cards faster!');
   }
 };
 
 // Start the game timer
 gameTimer = setInterval(updateTimer, 1000);
+
+// Popup functions
+const showPopup = (type, icon, title, message) => {
+  const popup = document.getElementById('popup');
+  const popupIcon = document.getElementById('popup-icon');
+  const popupTitle = document.getElementById('popup-title');
+  const popupMessage = document.getElementById('popup-message');
+  
+  popup.className = `popup-overlay ${type}`;
+  popupIcon.textContent = icon;
+  popupTitle.textContent = title;
+  popupMessage.textContent = message;
+  popup.style.display = 'flex';
+};
+
+const hidePopup = () => {
+  const popup = document.getElementById('popup');
+  popup.style.display = 'none';
+};
+
+const resetGame = () => {
+  // Reset all variables
+  firstGuess = '';
+  secondGuess = '';
+  count = 0;
+  previousTarget = null;
+  timeLeft = 30;
+  gameWon = false;
+  totalMatches = 0;
+  
+  // Clear timer
+  clearInterval(gameTimer);
+  
+  // Reset timer display
+  document.getElementById('timer').textContent = timeLeft;
+  
+  // Clear all cards
+  const grid = document.querySelector('.grid');
+  grid.innerHTML = '';
+  
+  // Recreate game grid
+  const newGameGrid = cardsArray
+    .concat(cardsArray)
+    .sort(() => 0.5 - Math.random());
+  
+  newGameGrid.forEach(item => {
+    const { name, img } = item;
+
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.dataset.name = name;
+
+    const front = document.createElement('div');
+    front.classList.add('front');
+
+    const back = document.createElement('div');
+    back.classList.add('back');
+    back.style.backgroundImage = `url(${img})`;
+
+    grid.appendChild(card);
+    card.appendChild(front);
+    card.appendChild(back);
+  });
+  
+  // Restart timer
+  gameTimer = setInterval(updateTimer, 1000);
+  
+  // Hide popup
+  hidePopup();
+};
+
+// Add event listener for popup button
+document.addEventListener('DOMContentLoaded', () => {
+  const popupButton = document.getElementById('popup-button');
+  popupButton.addEventListener('click', resetGame);
+});

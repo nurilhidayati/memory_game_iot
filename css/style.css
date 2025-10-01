@@ -83,3 +83,126 @@ body {
 .match .front {
   background: #6589F9 !important;
 }
+
+/* Popup Modal Styles */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.popup-content {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  width: 90%;
+  animation: slideIn 0.4s ease-out;
+  border: 3px solid white;
+}
+
+.popup-icon {
+  font-size: 4em;
+  margin-bottom: 20px;
+  animation: bounce 0.6s ease-in-out;
+}
+
+.popup-content h2 {
+  color: white;
+  font-size: 2.5em;
+  margin: 0 0 15px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+}
+
+.popup-content p {
+  color: white;
+  font-size: 1.2em;
+  margin: 0 0 30px 0;
+  line-height: 1.4;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.popup-btn {
+  background: linear-gradient(45deg, #FF6B6B, #FF8E8E);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.2em;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.popup-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+  background: linear-gradient(45deg, #FF5252, #FF7979);
+}
+
+.popup-btn:active {
+  transform: translateY(0);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { 
+    transform: translateY(-50px) scale(0.8);
+    opacity: 0;
+  }
+  to { 
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Win popup specific styles */
+.popup-overlay.win .popup-content {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+}
+
+.popup-overlay.win .popup-icon {
+  color: #4CAF50;
+  text-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+}
+
+/* Lose popup specific styles */
+.popup-overlay.lose .popup-content {
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+}
+
+.popup-overlay.lose .popup-icon {
+  color: #f44336;
+  text-shadow: 0 0 20px rgba(244, 67, 54, 0.5);
+}

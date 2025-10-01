@@ -73,7 +73,7 @@ var match = function match() {
     gameWon = true;
     clearInterval(gameTimer);
     setTimeout(function() {
-      alert('🎉 You Win! 🎉\nCongratulations! You matched all cards in time!');
+      showPopup('win', '🎉', 'You Win!', 'Congratulations! You matched all cards in time!');
     }, delay);
   }
 };
@@ -127,9 +127,86 @@ var updateTimer = function updateTimer() {
   
   if (timeLeft <= 0 && !gameWon) {
     clearInterval(gameTimer);
-    alert('⏰ You Lose! ⏰\nTime\'s up! Try again to match all cards faster!');
+    showPopup('lose', '⏰', 'You Lose!', 'Time\'s up! Try again to match all cards faster!');
   }
 };
 
 // Start the game timer
 gameTimer = setInterval(updateTimer, 1000);
+
+// Popup functions
+var showPopup = function showPopup(type, icon, title, message) {
+  var popup = document.getElementById('popup');
+  var popupIcon = document.getElementById('popup-icon');
+  var popupTitle = document.getElementById('popup-title');
+  var popupMessage = document.getElementById('popup-message');
+  
+  popup.className = 'popup-overlay ' + type;
+  popupIcon.textContent = icon;
+  popupTitle.textContent = title;
+  popupMessage.textContent = message;
+  popup.style.display = 'flex';
+};
+
+var hidePopup = function hidePopup() {
+  var popup = document.getElementById('popup');
+  popup.style.display = 'none';
+};
+
+var resetGame = function resetGame() {
+  // Reset all variables
+  firstGuess = '';
+  secondGuess = '';
+  count = 0;
+  previousTarget = null;
+  timeLeft = 30;
+  gameWon = false;
+  totalMatches = 0;
+  
+  // Clear timer
+  clearInterval(gameTimer);
+  
+  // Reset timer display
+  document.getElementById('timer').textContent = timeLeft;
+  
+  // Clear all cards
+  var grid = document.querySelector('.grid');
+  grid.innerHTML = '';
+  
+  // Recreate game grid
+  var newGameGrid = cardsArray.concat(cardsArray).sort(function () {
+    return 0.5 - Math.random();
+  });
+  
+  newGameGrid.forEach(function (item) {
+    var name = item.name,
+        img = item.img;
+
+    var card = document.createElement('div');
+    card.classList.add('card');
+    card.dataset.name = name;
+
+    var front = document.createElement('div');
+    front.classList.add('front');
+
+    var back = document.createElement('div');
+    back.classList.add('back');
+    back.style.backgroundImage = 'url(' + img + ')';
+
+    grid.appendChild(card);
+    card.appendChild(front);
+    card.appendChild(back);
+  });
+  
+  // Restart timer
+  gameTimer = setInterval(updateTimer, 1000);
+  
+  // Hide popup
+  hidePopup();
+};
+
+// Add event listener for popup button
+document.addEventListener('DOMContentLoaded', function () {
+  var popupButton = document.getElementById('popup-button');
+  popupButton.addEventListener('click', resetGame);
+});
