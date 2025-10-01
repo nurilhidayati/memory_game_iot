@@ -1,44 +1,26 @@
 'use strict';
 
 var cardsArray = [{
-  'name': 'shell',
-  'img': 'img/blueshell.png'
+  'name': 'foodlocker',
+  'img': 'img/foodlocker.png'
 }, {
-  'name': 'star',
-  'img': 'img/star.png'
+  'name': 'kartacam1',
+  'img': 'img/kartacam1.png'
 }, {
-  'name': 'bobomb',
-  'img': 'img/bobomb.png'
+  'name': 'kartadashcam2',
+  'img': 'img/kartadashcam2.png'
 }, {
-  'name': 'mario',
-  'img': 'img/mario.png'
+  'name': 'kartacam360',
+  'img': 'img/kartacam360.png'
 }, {
-  'name': 'luigi',
-  'img': 'img/luigi.png'
+  'name': 'kartadashcam1',
+  'img': 'img/kartadashcam1.png'
 }, {
-  'name': 'peach',
-  'img': 'img/peach.png'
-}, {
-  'name': '1up',
-  'img': 'img/1up.png'
-}, {
-  'name': 'mushroom',
-  'img': 'img/mushroom.png'
-}, {
-  'name': 'thwomp',
-  'img': 'img/thwomp.png'
-}, {
-  'name': 'bulletbill',
-  'img': 'img/bulletbill.png'
-}, {
-  'name': 'coin',
-  'img': 'img/coin.png'
-}, {
-  'name': 'goomba',
-  'img': 'img/goomba.png'
+  'name': 'kartacam2',
+  'img': 'img/kartacam2.png'
 }];
 
-var gameGrid = cardsArray.concat(cardsArray).sort(function () {
+var gameGrid = cardsArray.concat(cardsArray).concat(cardsArray).sort(function () {
   return 0.5 - Math.random();
 });
 
@@ -47,6 +29,11 @@ var secondGuess = '';
 var count = 0;
 var previousTarget = null;
 var delay = 1200;
+var timeLeft = 30;
+var gameTimer;
+var gameWon = false;
+var totalMatches = 0;
+var maxMatches = 9; // 6 unique cards × 3 copies = 9 pairs
 
 var game = document.getElementById('game');
 var grid = document.createElement('section');
@@ -79,6 +66,16 @@ var match = function match() {
   selected.forEach(function (card) {
     card.classList.add('match');
   });
+  totalMatches++;
+  
+  // Check if all cards are matched
+  if (totalMatches === maxMatches) {
+    gameWon = true;
+    clearInterval(gameTimer);
+    setTimeout(function() {
+      alert('🎉 You Win! 🎉\nCongratulations! You matched all cards in time!');
+    }, delay);
+  }
 };
 
 var resetGuesses = function resetGuesses() {
@@ -122,3 +119,17 @@ grid.addEventListener('click', function (event) {
     previousTarget = clicked;
   }
 });
+
+// Timer function
+var updateTimer = function updateTimer() {
+  timeLeft--;
+  document.getElementById('timer').textContent = timeLeft;
+  
+  if (timeLeft <= 0 && !gameWon) {
+    clearInterval(gameTimer);
+    alert('⏰ You Lose! ⏰\nTime\'s up! Try again to match all cards faster!');
+  }
+};
+
+// Start the game timer
+gameTimer = setInterval(updateTimer, 1000);

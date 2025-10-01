@@ -8,19 +8,47 @@
 body {
   margin: 20px 0;
   background: #6589F9;
+  font-family: Arial, sans-serif;
+}
+
+.game-header {
+  text-align: center;
+  margin-bottom: 30px;
+  color: white;
+}
+
+.game-header h1 {
+  font-size: 2.5em;
+  margin: 0 0 10px 0;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.timer-container {
+  font-size: 1.5em;
+  font-weight: bold;
+  background: rgba(255,255,255,0.2);
+  padding: 10px 20px;
+  border-radius: 25px;
+  display: inline-block;
+  border: 2px solid white;
 }
 
 .grid {
-  max-width: 960px;
+  max-width: 1200px;
   margin: 0 auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(6, 1fr);
+  -ms-grid-rows: 1fr 1fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 10px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .card {
@@ -36,8 +64,8 @@ body {
 .card,
 .back,
 .front {
-  height: 150px;
-  width: 150px;
+  height: 180px;
+  width: 180px;
 }
 
 .back,
@@ -48,7 +76,7 @@ body {
 }
 
 .front {
-  background: #FAB942 url('../img/question.gif') no-repeat center center / contain;
+  background: #FAB942 url('../img/question.png') no-repeat center center / contain;
 }
 
 .back {

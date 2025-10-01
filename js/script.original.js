@@ -1,54 +1,26 @@
 const cardsArray = [{
-    'name': 'shell',
-    'img': 'img/blueshell.png',
-  },
-  {
-    'name': 'star',
-    'img': 'img/star.png',
-  },
-  {
-    'name': 'bobomb',
-    'img': 'img/bobomb.png',
-  },
-  {
-    'name': 'mario',
-    'img': 'img/mario.png',
-  },
-  {
-    'name': 'luigi',
-    'img': 'img/luigi.png',
-  },
-  {
-    'name': 'peach',
-    'img': 'img/peach.png',
-  },
-  {
-    'name': '1up',
-    'img': 'img/1up.png',
-  },
-  {
-    'name': 'mushroom',
-    'img': 'img/mushroom.png',
-  },
-  {
-    'name': 'thwomp',
-    'img': 'img/thwomp.png',
-  },
-  {
-    'name': 'bulletbill',
-    'img': 'img/bulletbill.png',
-  },
-  {
-    'name': 'coin',
-    'img': 'img/coin.png',
-  },
-  {
-    'name': 'goomba',
-    'img': 'img/goomba.png',
-  },
-];
+  'name': 'foodlocker',
+  'img': 'img/foodlocker.png'
+}, {
+  'name': 'kartacam1',
+  'img': 'img/kartacam1.png'
+}, {
+  'name': 'kartadashcam2',
+  'img': 'img/kartadashcam2.png'
+}, {
+  'name': 'kartacam360',
+  'img': 'img/kartacam360.png'
+}, {
+  'name': 'kartadashcam1',
+  'img': 'img/kartadashcam1.png'
+}, {
+  'name': 'kartacam2',
+  'img': 'img/kartacam2.png'
+}];
+
 
 const gameGrid = cardsArray
+  .concat(cardsArray)
   .concat(cardsArray)
   .sort(() => 0.5 - Math.random());
 
@@ -57,6 +29,11 @@ let secondGuess = '';
 let count = 0;
 let previousTarget = null;
 let delay = 1200;
+let timeLeft = 30;
+let gameTimer;
+let gameWon = false;
+let totalMatches = 0;
+let maxMatches = 9; // 6 unique cards × 3 copies = 9 pairs
 
 const game = document.getElementById('game');
 const grid = document.createElement('section');
@@ -87,6 +64,16 @@ const match = () => {
   selected.forEach(card => {
     card.classList.add('match');
   });
+  totalMatches++;
+  
+  // Check if all cards are matched
+  if (totalMatches === maxMatches) {
+    gameWon = true;
+    clearInterval(gameTimer);
+    setTimeout(() => {
+      alert('🎉 You Win! 🎉\nCongratulations! You matched all cards in time!');
+    }, delay);
+  }
 };
 
 const resetGuesses = () => {
@@ -136,3 +123,17 @@ grid.addEventListener('click', event => {
   }
 
 });
+
+// Timer function
+const updateTimer = () => {
+  timeLeft--;
+  document.getElementById('timer').textContent = timeLeft;
+  
+  if (timeLeft <= 0 && !gameWon) {
+    clearInterval(gameTimer);
+    alert('⏰ You Lose! ⏰\nTime\'s up! Try again to match all cards faster!');
+  }
+};
+
+// Start the game timer
+gameTimer = setInterval(updateTimer, 1000);
