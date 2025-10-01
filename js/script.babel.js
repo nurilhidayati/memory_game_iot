@@ -160,6 +160,14 @@ var updateTimer = function updateTimer() {
   timeLeft--;
   document.getElementById('timer').textContent = timeLeft;
   
+  // Add warning effect to stop button when time is running low
+  var stopBtn = document.getElementById('stop-btn');
+  if (timeLeft <= 10 && timeLeft > 0 && !gameWon) {
+    stopBtn.classList.add('warning');
+  } else {
+    stopBtn.classList.remove('warning');
+  }
+  
   if (timeLeft <= 0 && !gameWon) {
     clearInterval(gameTimer);
     showPopup('lose', '⏰', 'You Lose!', 'Time\'s up! Try again to match all cards faster!');
@@ -189,6 +197,11 @@ var hidePopup = function hidePopup() {
 };
 
 var resetGame = function resetGame() {
+  // Add loading effect to restart button
+  var restartBtn = document.getElementById('restart-btn');
+  restartBtn.classList.add('loading');
+  restartBtn.disabled = true;
+  
   // Reset all variables
   firstGuess = '';
   secondGuess = '';
@@ -238,6 +251,7 @@ var resetGame = function resetGame() {
   var stopBtn = document.getElementById('stop-btn');
   stopBtn.disabled = false;
   stopBtn.textContent = '⏹️ Stop';
+  stopBtn.classList.remove('warning');
   
   // Re-enable all cards
   var cards = document.querySelectorAll('.card');
@@ -246,6 +260,12 @@ var resetGame = function resetGame() {
     card.style.pointerEvents = 'auto';
     card.style.opacity = '1';
   });
+  
+  // Remove loading effect and re-enable restart button
+  setTimeout(function () {
+    restartBtn.classList.remove('loading');
+    restartBtn.disabled = false;
+  }, 1000);
   
   // Hide popup
   hidePopup();
