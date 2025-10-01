@@ -40,8 +40,8 @@ body {
   display: grid;
   -ms-grid-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-columns: repeat(6, 1fr);
-  -ms-grid-rows: 1fr 1fr 1fr;
-  grid-template-rows: repeat(3, 1fr);
+  -ms-grid-rows: 1fr 1fr;
+  grid-template-rows: repeat(2, 1fr);
   gap: 10px;
   -webkit-box-pack: center;
       -ms-flex-pack: center;

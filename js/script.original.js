@@ -21,7 +21,6 @@ const cardsArray = [{
 
 const gameGrid = cardsArray
   .concat(cardsArray)
-  .concat(cardsArray)
   .sort(() => 0.5 - Math.random());
 
 let firstGuess = '';
@@ -33,7 +32,7 @@ let timeLeft = 30;
 let gameTimer;
 let gameWon = false;
 let totalMatches = 0;
-let maxMatches = 9; // 6 unique cards × 3 copies = 9 pairs
+let maxMatches = 6; // 6 unique cards × 2 copies = 6 pairs
 
 const game = document.getElementById('game');
 const grid = document.createElement('section');

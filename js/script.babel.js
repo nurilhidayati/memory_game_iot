@@ -20,7 +20,7 @@ var cardsArray = [{
   'img': 'img/kartacam2.png'
 }];
 
-var gameGrid = cardsArray.concat(cardsArray).concat(cardsArray).sort(function () {
+var gameGrid = cardsArray.concat(cardsArray).sort(function () {
   return 0.5 - Math.random();
 });
 
@@ -33,7 +33,7 @@ var timeLeft = 30;
 var gameTimer;
 var gameWon = false;
 var totalMatches = 0;
-var maxMatches = 9; // 6 unique cards × 3 copies = 9 pairs
+var maxMatches = 6; // 6 unique cards × 2 copies = 6 pairs
 
 var game = document.getElementById('game');
 var grid = document.createElement('section');
