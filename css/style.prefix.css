@@ -23,6 +23,158 @@ body {
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
+.header-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+/* Eye-catching button styles */
+.restart-btn, .stop-btn {
+  padding: 15px 25px;
+  font-size: 1.2em;
+  font-weight: bold;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  transform: translateY(0);
+  min-width: 140px;
+  z-index: 1;
+}
+
+.restart-btn {
+  background: linear-gradient(45deg, #4CAF50, #45a049, #66BB6A);
+  background-size: 200% 200%;
+  color: white;
+  animation: gradientShift 3s ease infinite;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+.stop-btn {
+  background: linear-gradient(45deg, #f44336, #d32f2f, #FF5722);
+  background-size: 200% 200%;
+  color: white;
+  animation: gradientShift 3s ease infinite reverse;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+/* Gradient animation */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Hover effects */
+.restart-btn:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(76, 175, 80, 0.4);
+  animation-duration: 1s;
+  border-color: rgba(255,255,255,0.8);
+}
+
+.stop-btn:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(244, 67, 54, 0.4);
+  animation-duration: 1s;
+  border-color: rgba(255,255,255,0.8);
+}
+
+/* Active/pressed state */
+.restart-btn:active, .stop-btn:active {
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* Disabled state */
+.restart-btn:disabled, .stop-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: translateY(0) scale(1);
+  animation: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  border-color: rgba(255,255,255,0.2);
+}
+
+/* Loading effect for restart button */
+.restart-btn.loading {
+  animation: pulse 1s ease-in-out infinite, gradientShift 3s ease infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Warning effect for stop button when time is low */
+.stop-btn.warning {
+  animation: warning-pulse 0.5s ease-in-out infinite, gradientShift 3s ease infinite reverse;
+  box-shadow: 0 8px 25px rgba(255, 193, 7, 0.6);
+}
+
+@keyframes warning-pulse {
+  0% { 
+    background: linear-gradient(45deg, #f44336, #d32f2f, #FF5722);
+    transform: scale(1); 
+  }
+  50% { 
+    background: linear-gradient(45deg, #FF9800, #F57C00, #FFC107);
+    transform: scale(1.08); 
+  }
+  100% { 
+    background: linear-gradient(45deg, #f44336, #d32f2f, #FF5722);
+    transform: scale(1); 
+  }
+}
+
+/* Glow effect */
+.restart-btn::before, .stop-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.5s ease;
+  z-index: -1;
+}
+
+.restart-btn:hover::before, .stop-btn:hover::before {
+  left: 100%;
+}
+
+/* Sparkle effect */
+.restart-btn::after, .stop-btn::after {
+  content: '✨';
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  font-size: 0.8em;
+  opacity: 0;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { 
+    opacity: 0; 
+    transform: rotate(0deg) scale(0.5); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: rotate(180deg) scale(1); 
+  }
+}
+
 .timer-container {
   font-size: 1.5em;
   font-weight: bold;
@@ -93,8 +245,57 @@ body {
           transform: rotateY(180deg);
 }
 
-.match .front {
-  background: #6589F9 !important;
+@-webkit-keyframes matchSuccess {
+  0% { 
+    -webkit-transform: rotateY(180deg) scale(1); 
+    transform: rotateY(180deg) scale(1); 
+    opacity: 0.8;
+  }
+  50% { 
+    -webkit-transform: rotateY(180deg) scale(1.1); 
+    transform: rotateY(180deg) scale(1.1); 
+    opacity: 1;
+  }
+  100% { 
+    -webkit-transform: rotateY(180deg) scale(0.95); 
+    transform: rotateY(180deg) scale(0.95); 
+    opacity: 0.8;
+  }
+}
+
+@keyframes matchSuccess {
+  0% { 
+    -webkit-transform: rotateY(180deg) scale(1); 
+    transform: rotateY(180deg) scale(1); 
+    opacity: 0.8;
+  }
+  50% { 
+    -webkit-transform: rotateY(180deg) scale(1.1); 
+    transform: rotateY(180deg) scale(1.1); 
+    opacity: 1;
+  }
+  100% { 
+    -webkit-transform: rotateY(180deg) scale(0.95); 
+    transform: rotateY(180deg) scale(0.95); 
+    opacity: 0.8;
+  }
+}
+
+.match {
+  -webkit-transform: rotateY(180deg);
+          transform: rotateY(180deg);
+  opacity: 0.8;
+  pointer-events: none;
+  -webkit-transform: rotateY(180deg) scale(0.95);
+          transform: rotateY(180deg) scale(0.95);
+}
+
+.match .back {
+  opacity: 1;
+  border: 3px solid #4CAF50;
+  border-radius: 15px;
+  -webkit-box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+          box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
 }
 
 /* Popup Modal Styles */
@@ -276,6 +477,17 @@ body {
 .popup-overlay.lose .popup-icon {
   color: #f44336;
   text-shadow: 0 0 20px rgba(244, 67, 54, 0.5);
+}
+
+/* Stop popup specific styles */
+.popup-overlay.stop .popup-content {
+  background: -webkit-gradient(linear, left top, right bottom, from(#ff9800), to(#f57c00));
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+}
+
+.popup-overlay.stop .popup-icon {
+  color: #ff9800;
+  text-shadow: 0 0 20px rgba(255, 152, 0, 0.5);
 }
 
 /* Popup Button Styles */

@@ -54,7 +54,7 @@ let secondGuess = '';
 let count = 0;
 let previousTarget = null;
 let delay = 800; // Faster card flip back for harder difficulty
-let timeLeft = 30;
+let timeLeft = 45;
 let gameTimer;
 let gameWon = false;
 let totalMatches = 0;
@@ -88,6 +88,10 @@ const match = () => {
   const selected = document.querySelectorAll('.selected');
   selected.forEach(card => {
     card.classList.add('match');
+    // Make sure matched cards cannot be clicked again
+    card.style.pointerEvents = 'none';
+    // Add a subtle animation to show they're matched
+    card.style.animation = 'matchSuccess 0.6s ease-in-out';
   });
   totalMatches++;
   
@@ -184,11 +188,16 @@ const showPopup = (type, icon, title, message) => {
   const popupTitle = document.getElementById('popup-title');
   const popupMessage = document.getElementById('popup-message');
   
-  popup.className = `popup-overlay ${type}`;
-  popupIcon.textContent = icon;
-  popupTitle.textContent = title;
-  popupMessage.textContent = message;
-  popup.style.display = 'flex';
+  if (popup && popupIcon && popupTitle && popupMessage) {
+    popup.className = `popup-overlay ${type}`;
+    popupIcon.textContent = icon;
+    popupTitle.textContent = title;
+    popupMessage.textContent = message;
+    popup.style.display = 'flex';
+    
+    // Force a reflow to ensure the popup is visible
+    popup.offsetHeight;
+  }
 };
 
 const hidePopup = () => {
@@ -207,7 +216,7 @@ const resetGame = () => {
   secondGuess = '';
   count = 0;
   previousTarget = null;
-  timeLeft = 30;
+  timeLeft = 45;
   gameWon = false;
   totalMatches = 0;
   
@@ -256,8 +265,11 @@ const resetGame = () => {
   const cards = document.querySelectorAll('.card');
   cards.forEach(card => {
     card.classList.remove('disabled');
+    card.classList.remove('match');
+    card.classList.remove('selected');
     card.style.pointerEvents = 'auto';
     card.style.opacity = '1';
+    card.style.animation = '';
   });
   
   // Remove loading effect and re-enable restart button
@@ -302,21 +314,26 @@ const stopGame = () => {
     card.style.opacity = '0.6';
   });
   
-  // Show stop popup
-  showPopup('stop', '⏹️', 'Game Stopped', 'You stopped the game. Click Play Again to restart!');
+  // Don't show popup - just stop the game silently
 };
 
 // Add event listeners
 document.addEventListener('DOMContentLoaded', () => {
   // Restart button
   const restartBtn = document.getElementById('restart-btn');
-  restartBtn.addEventListener('click', resetGame);
+  if (restartBtn) {
+    restartBtn.addEventListener('click', resetGame);
+  }
   
   // Stop button
   const stopBtn = document.getElementById('stop-btn');
-  stopBtn.addEventListener('click', stopGame);
+  if (stopBtn) {
+    stopBtn.addEventListener('click', stopGame);
+  }
   
   // Popup button
   const playAgainBtn = document.getElementById('play-again-btn');
-  playAgainBtn.addEventListener('click', resetGame);
+  if (playAgainBtn) {
+    playAgainBtn.addEventListener('click', resetGame);
+  }
 });
