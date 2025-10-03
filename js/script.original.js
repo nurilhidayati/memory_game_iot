@@ -54,7 +54,7 @@ let secondGuess = '';
 let count = 0;
 let previousTarget = null;
 let delay = 800; // Faster card flip back for harder difficulty
-let timeLeft = 30;
+let timeLeft = 45;
 let gameTimer;
 let gameWon = false;
 let totalMatches = 0;
@@ -216,7 +216,7 @@ const resetGame = () => {
   secondGuess = '';
   count = 0;
   previousTarget = null;
-  timeLeft = 30;
+  timeLeft = 45;
   gameWon = false;
   totalMatches = 0;
   

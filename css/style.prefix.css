@@ -247,47 +247,49 @@ body {
 
 @-webkit-keyframes matchSuccess {
   0% { 
-    -webkit-transform: rotateY(180deg) scale(1); 
-    transform: rotateY(180deg) scale(1); 
+    -webkit-transform: scale(1); 
+    transform: scale(1); 
     opacity: 0.8;
   }
   50% { 
-    -webkit-transform: rotateY(180deg) scale(1.1); 
-    transform: rotateY(180deg) scale(1.1); 
+    -webkit-transform: scale(1.1); 
+    transform: scale(1.1); 
     opacity: 1;
   }
   100% { 
-    -webkit-transform: rotateY(180deg) scale(0.95); 
-    transform: rotateY(180deg) scale(0.95); 
+    -webkit-transform: scale(0.95); 
+    transform: scale(0.95); 
     opacity: 0.8;
   }
 }
 
 @keyframes matchSuccess {
   0% { 
-    -webkit-transform: rotateY(180deg) scale(1); 
-    transform: rotateY(180deg) scale(1); 
+    -webkit-transform: scale(1); 
+    transform: scale(1); 
     opacity: 0.8;
   }
   50% { 
-    -webkit-transform: rotateY(180deg) scale(1.1); 
-    transform: rotateY(180deg) scale(1.1); 
+    -webkit-transform: scale(1.1); 
+    transform: scale(1.1); 
     opacity: 1;
   }
   100% { 
-    -webkit-transform: rotateY(180deg) scale(0.95); 
-    transform: rotateY(180deg) scale(0.95); 
+    -webkit-transform: scale(0.95); 
+    transform: scale(0.95); 
     opacity: 0.8;
   }
 }
 
 .match {
-  -webkit-transform: rotateY(180deg);
-          transform: rotateY(180deg);
+  -webkit-transform: scale(0.95);
+          transform: scale(0.95);
   opacity: 0.8;
   pointer-events: none;
-  -webkit-transform: rotateY(180deg) scale(0.95);
-          transform: rotateY(180deg) scale(0.95);
+}
+
+.match .front {
+  display: none;
 }
 
 .match .back {
@@ -296,6 +298,8 @@ body {
   border-radius: 15px;
   -webkit-box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
           box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+  -webkit-transform: rotateY(0deg);
+          transform: rotateY(0deg);
 }
 
 /* Popup Modal Styles */
