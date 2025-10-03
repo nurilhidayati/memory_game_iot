@@ -107,7 +107,7 @@ var match = function match() {
     gameWon = true;
     clearInterval(gameTimer);
     setTimeout(function() {
-      showPopup('win', '🎉', 'You Win!', 'Congratulations! You matched all cards in time!');
+      showPopup('win', '🎉', 'You Win!');
     }, delay);
   }
 };
@@ -174,7 +174,7 @@ var updateTimer = function updateTimer() {
   
   if (timeLeft <= 0 && !gameWon) {
     clearInterval(gameTimer);
-    showPopup('lose', '⏰', 'You Lose!', 'Time\'s up! Try again to match all cards faster!');
+    showPopup('lose', '⏰', 'You Lose!');
   }
 };
 
