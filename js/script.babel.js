@@ -59,7 +59,7 @@ var secondGuess = '';
 var count = 0;
 var previousTarget = null;
 var delay = 800; // Faster card flip back for harder difficulty
-var timeLeft = 45;
+var timeLeft = 30;
 var gameTimer;
 var gameWon = false;
 var totalMatches = 0;
@@ -216,7 +216,7 @@ var resetGame = function resetGame() {
   secondGuess = '';
   count = 0;
   previousTarget = null;
-  timeLeft = 45;
+  timeLeft = 30;
   gameWon = false;
   totalMatches = 0;
   
